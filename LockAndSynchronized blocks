@@ -1,0 +1,22 @@
+ A Renetrant lock has the same basic behavior as we have seen for sync blokcs (with some extended feeature)
+
+ ..we can make a lock fair : prevent thread starvation
+ sync blocks are unfair by default
+ .. we can check whether the given lock is held or not with reenrtrant lock
+ ..we can get the list of thereads waiting for the given lock with renetrant locks
+ ..synch blocks are nices: we do not need the try-catch-finally block
+
+
+
+
+
+ ///volatile
+
+
+ every thread has their own stacck memory with cpu1 and with cache alse
+
+ every read of a volatile voriable will be read from the RAM so from the main
+ memroy(not from cache)
+ usually variable are cached for performance reasons
+ caches are faster. Do not use volatile keyword if not necessary (+ it prevents instruction
+ reorderin which is a performance boost technique)
