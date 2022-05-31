@@ -17,7 +17,7 @@ class Proces implements Callable<String> {
 
 public class RunnableAndCallable {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        
+
           ExecutorService executorServices = Executors.newFixedThreadPool(2);
           List<Future<String>> list = new ArrayList<>();
           for (int i = 0; i < 5; i++) {
