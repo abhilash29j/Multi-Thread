@@ -20,3 +20,115 @@
  usually variable are cached for performance reasons
  caches are faster. Do not use volatile keyword if not necessary (+ it prevents instruction
  reorderin which is a performance boost technique)
+
+
+
+ ///deadlocks and livelocks
+
+ deadlock occurs when two or more threads wait forever for a lock
+ or resource held by another of the threads
+
+ ..deadlock is a situation in which two or more competing actions are each
+ waiting for the other to finish, and thus neither ever does
+
+ 1.Deadlock in databases;
+ deadlock happens, when two proceesse each within its own transaction updates
+ two rows of informatio but in the opposite order.
+ for exampel processA updates row 1 then row2 in the exact timeframe that process b
+ updates row 2 then row 1
+
+
+ 2.deadlock in os
+ deadlock is asituation which  occures when a process or thread eneter a
+ waiting state because a resource requested is being held by another waiting process,
+ which in turn is waiting for another resource held by another waiting process
+
+//livelock
+a thread often acts in response to the action of another thread
+if the other thread's action is also a response to the action of another thread
+then livelock may arise
+.. livelocked threads are unable to make furtehr progress. However, the threads
+are not blocked: they are simply too busy responding to each other to resume work
+.. like two people
+
+
+
+/////how to handle deadlock and livelock?
+
+1. we should make sure that a thread does not block infinetly if it is unable to acquire a lock
+    -> this is why using Lock interface's tryLock() method is extrememly convenient and useful
+
+ 2. we should make sure that each thread acquires the locks in the same order to avoid
+ any cyclic dependency in lock acquisition
+
+ 3.livelock can be handled with the methods above and some randmomeness thread retry
+ acquiring the locks at randmom intervals
+
+ //semaphores
+ semaphores are simple variables(or abstract data type) that are used for
+ controlling access to a common reseource
+
+ .it is an important concept in os as well
+
+ .it is a record of how many units of a particualr reource are availvabe
+ we have to wait until a uni of the resource becomes avaialbe again.
+ counting semaphore: allows an arbitrary resource count
+ binary semaphore: semaphore that are restrivtd to the values 0 and 1
+
+ ..semaphore tracks only how many resurces are free - it does not keep
+ track of which of the ressouces are free
+ .. thesemaphore count may serve as useful trigger for a number of
+ dofferencrent actions(web servers)
+ .producer-consumer problem can be solved and implemented with the help of semaphore
+(djiskta appraoch)
+
+
+
+///mutex(mutual exclusion object)
+
+.mutex is a property of concurrency control which is institured for the purpose of preventing race conditions
+
+..process sycn plays an important role in mainting the consistency of shared datea(cricitcal section problem)
+mutex is similar to binary semaphore while binary sempahore can be used a smutext.a mutex
+is a more specfic use-case
+.a lock is designed to enforence a mutual excvlusion concrurecny preotection policy
+
+
+///mutex
+semaphore
+      it is a signalling mechanism
+      threads and process perfrom wait() and notify() operations to indiate whether they are acquirign or releasing the resource
+       semaphore allows mulitple program threads to access the finite instances of resoruces(not just a single resoruce)
+
+
+
+mutex
+
+     mutex is a locking mechanism
+     threads or processes have to acquire the lock on mutex object if it wants to acquire the reourcse
+     mutex allows multiple program threads to access a single shared resource but one at a time
+
+  Runnable and callable interface
+
+  runnable and callable both run on a different threads than the calling thread but callable can return a value and Runnable can not
+  Runnable: a so-called run0and =forget action. We exectute a given operation in the run() method without a return value
+
+  Callable<T>: We use callble interface's call () method if we want to return a given value from the given thread
+     .. callable interface will not return the value: this is why we need Future<T> object
+
+     ... calling thrread will be blocked  till the call() mehtod is executred and Future<t> reutns with the results
+
+
+
+
+     The executorService can handle both of the interfaces
+     (Runnable and Callable interfaces)
+
+     executorService.execute()
+         This mehtod executes a Runnable interface so it means there is not return value(void run() mehtod)
+
+
+
+         executroService.submit()
+              this mehtod can handle Runnable interfaces as well as Callable interfaces
+                                      it can handle a Future<T> reutrn value and we can get the T value with get() on the future object
